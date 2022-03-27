@@ -39,7 +39,6 @@ jobs:
         source: "build/libs/*.jar"
         target: "source"
         rm: true
-        debug: true
     - name: Deploy new version of server
       uses: appleboy/ssh-action@master
       with:
@@ -50,7 +49,7 @@ jobs:
         script: |
           SOURCE_DIR=source/build/libs
           FILE_NAME=`find $SOURCE_DIR/*.jar -printf "%f\n"`
-          PID=`ps -ef | grep java | grep moim | grep -v "bash -c" | awk '{print $2}'`
+          PID=`ps -ef | grep java | grep api | grep -v "bash -c" | awk '{print $2}'`
           
           echo "Old version of app is currently running on $PID." 
           echo "Filename of new version is $FILE_NAME." 
