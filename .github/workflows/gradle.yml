@@ -48,7 +48,7 @@ jobs:
         port: ${{ secrets.MOIM_SSH_PORT }}
         script: |
           SOURCE_DIR=source/build/libs
-          FILE_NAME=`find $SOURCE_DIR/*.jar -Djava.net.preferIPv4Stack=true -printf "%f\n"`
+          FILE_NAME=`find $SOURCE_DIR/*.jar -printf "%f\n"`
           PID=`ps -ef | grep java | grep api | grep -v "bash -c" | awk '{print $2}'`
           
           echo "Old version of app is currently running on $PID." 
@@ -62,4 +62,4 @@ jobs:
             kill $PID 
           fi
           
-          java -jar $SOURCE_DIR/$FILE_NAME > /dev/null 2>&1 &
+          java -jar -Djava.net.preferIPv4Stack=true $SOURCE_DIR/$FILE_NAME > /dev/null 2>&1 &
